@@ -26,17 +26,17 @@
 	#endif
 #endif
 
-#if (__cplusplus == 201703L) && defined(__has_include)
-	#define SW_CAPABLE_PLATFORM __has_include(<SoftwareSerial.h>)
-#elif defined(__AVR__) || defined(TARGET_LPC1768) || defined(ARDUINO_ARCH_STM32)
+// #if (__cplusplus == 201703L) && defined(__has_include)
+// 	#define SW_CAPABLE_PLATFORM __has_include(<SoftwareSerial.h>)
+#if defined(__AVR__) || defined(TARGET_LPC1768) || defined(ARDUINO_ARCH_STM32)
 	#define SW_CAPABLE_PLATFORM true
 #else
 	#define SW_CAPABLE_PLATFORM false
 #endif
 
-#if SW_CAPABLE_PLATFORM
-	#include <SoftwareSerial.h>
-#endif
+// #if SW_CAPABLE_PLATFORM
+// 	#include <SoftwareSerial.h>
+// #endif
 
 #include "source/SERIAL_SWITCH.h"
 #include "source/SW_SPI.h"
@@ -828,18 +828,18 @@ class TMC2208Stepper : public TMCStepper {
 		TMC2208Stepper(Stream * SerialPort, float RS) :
 			TMC2208Stepper(SerialPort, RS, TMC2208_SLAVE_ADDR)
 			{}
-		#if SW_CAPABLE_PLATFORM
-			TMC2208Stepper(uint16_t SW_RX_pin, uint16_t SW_TX_pin, float RS) :
-				TMC2208Stepper(SW_RX_pin, SW_TX_pin, RS, TMC2208_SLAVE_ADDR)
-				{}
+		// #if SW_CAPABLE_PLATFORM
+		// 	TMC2208Stepper(uint16_t SW_RX_pin, uint16_t SW_TX_pin, float RS) :
+		// 		TMC2208Stepper(SW_RX_pin, SW_TX_pin, RS, TMC2208_SLAVE_ADDR)
+		// 		{}
 
-			__attribute__((deprecated("Boolean argument has been deprecated and does nothing")))
-			TMC2208Stepper(uint16_t SW_RX_pin, uint16_t SW_TX_pin, float RS, bool) :
-				TMC2208Stepper(SW_RX_pin, SW_TX_pin, RS, TMC2208_SLAVE_ADDR)
-				{};
-		#else
+		// 	__attribute__((deprecated("Boolean argument has been deprecated and does nothing")))
+		// 	TMC2208Stepper(uint16_t SW_RX_pin, uint16_t SW_TX_pin, float RS, bool) :
+		// 		TMC2208Stepper(SW_RX_pin, SW_TX_pin, RS, TMC2208_SLAVE_ADDR)
+		// 		{};
+		// #else
 			TMC2208Stepper(uint16_t, uint16_t, float) = delete; // Your platform does not currently support Software Serial
-		#endif
+		// #endif
 		void defaults();
 		void push();
 		void begin();
@@ -1004,10 +1004,10 @@ class TMC2208Stepper : public TMCStepper {
 		#endif
 
 		Stream * HWSerial = nullptr;
-		#if SW_CAPABLE_PLATFORM
-			SoftwareSerial * SWSerial = nullptr;
-			const uint16_t RXTX_pin = 0; // Half duplex
-		#endif
+		// #if SW_CAPABLE_PLATFORM
+		// 	SoftwareSerial * SWSerial = nullptr;
+		// 	const uint16_t RXTX_pin = 0; // Half duplex
+		// #endif
 
 		SSwitch *sswitch = nullptr;
 
